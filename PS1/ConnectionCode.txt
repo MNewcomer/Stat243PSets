@@ -1,0 +1,24 @@
+scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/LecturePractice/unit2_link/myPdfs.txt ~/LecturePractice/unit2_link/
+
+scp -r ~/LecturePractice/unit2_link/* s243-22@scf-ug03.berkeley.edu:~/Documents/LecturePractice/unit2_link
+scp -r ~/Stat242PSFiles/PS1_link/PS1_Newcomer.sh s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS1_link/
+
+scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/LecturePractice/unit2_link/* ~/LecturePractice/unit2_link/
+scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS1_link/Apricots526.csv ~/Stat242PSFiles/PS1_link/
+
+function putscf() {
+   scp -r ~/$1 s243-22@scf-ug03.berkeley.edu:~/$2 
+}
+
+echo 'a' >> tester.txt
+putscf LecturePractice/unit2_link/forloopDownload.sh Documents/LecturePractice/unit2_link/
+
+
+
+function putscf() {
+   scp -r ~/$1 s243-22@scf-ug03.berkeley.edu:~/$2 
+}
+
+putscf LecturePractice/unit2_link/forloopDownload.sh Documents/LecturePractice/unit2_link/
+
+C:/Users/Michelle\ Newcomer/AppData/Local/GitHub/PortableGit_015aa71ef18c047ce8509ffb2f9e4bb0e3e73f13/bin/
