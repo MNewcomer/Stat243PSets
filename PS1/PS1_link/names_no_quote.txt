@@ -1,0 +1,7 @@
+16:a href=ghcnd-countries.txt
+17:a href=ghcnd-inventory.txt
+18:a href=ghcnd-states.txt
+19:a href=ghcnd-stations.txt
+20:a href=ghcnd-version.txt
+28:a href=readme.txt
+29:a href=status.txt

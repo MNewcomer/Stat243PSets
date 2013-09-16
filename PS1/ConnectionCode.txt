@@ -4,7 +4,7 @@ scp -r ~/LecturePractice/unit2_link/* s243-22@scf-ug03.berkeley.edu:~/Documents/
 scp -r ~/Stat242PSFiles/PS1_link/PS1_Newcomer.sh s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS1_link/
 
 scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/LecturePractice/unit2_link/* ~/LecturePractice/unit2_link/
-scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS1_link/Apricots526.csv ~/Stat242PSFiles/PS1_link/
+scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS1_link/ ~/Stat242PSFiles/PS1/
 
 function putscf() {
    scp -r ~/$1 s243-22@scf-ug03.berkeley.edu:~/$2 
@@ -22,3 +22,11 @@ function putscf() {
 putscf LecturePractice/unit2_link/forloopDownload.sh Documents/LecturePractice/unit2_link/
 
 C:/Users/Michelle\ Newcomer/AppData/Local/GitHub/PortableGit_015aa71ef18c047ce8509ffb2f9e4bb0e3e73f13/bin/
+
+ssh -Y s243-22@scf-ug03.berkeley.edu
+
+
+Git
+cd "D:\Users\Michelle Newcomer\Documents\GitHub\Stat243-fall-2013"
+cd "D:\Users\Michelle Newcomer\Documents\GitHub\Stat243PSets\PS2"
+cd "D:\Users\Michelle Newcomer\Documents\GitHub\Stat243PSets"

@@ -173,10 +173,6 @@ hljs.initHighlightingOnLoad();
 </script>
 
 
-<!-- MathJax scripts -->
-<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
 
 
 </head>
@@ -222,34 +218,34 @@ Date:   Fri Sep 6 10:22:44 2013 -0700</p>
 
 <p>D:\Users\Michelle Newcomer\Documents\GitHub\LecturePractice [master]&gt; </p>
 
-<p><img src="http://i.imgur.com/TsbzU2t.png" alt="Image for my online Git repository"/></p>
-
 <h3>Problem 3</h3>
 
-<pre><code class="sh">#! /bin/bash
-cd ~/Documents/Stat242PSFiles/PS1_link/
+<p>Throughout the decades the top producer of apricots has shifted from Lebanon in 1965 to Ukraine in 2005. </p>
 
+<pre><code class="bash">#! /bin/bash
 echo &quot;Please enter the code # of the type of crop then press enter: &quot;
 read input_variable
 echo &quot;You entered: $input_variable&quot;
 IFS=: # internal field separator
 type=$input_variable # this specifies the type of crop
 
-wget -O Data${type}.zip &quot;http://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=itemCode:&quot;${type}&quot;&amp;DataMartId=FAO&amp;Format=csv&amp;s=countryName:asc,elementCode:asc,year:desc&amp;c=2,3,4,5,6,7&amp;&quot; #this line downloads the data and renames the data to Apricots.zip
+# the wget grabs the zip file and the -O allows the name to be changed
+wget -O Data${type}.zip &quot;http://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=itemCode:&quot;${type}&quot;&amp;DataMartId=\
+FAO&amp;Format=csv&amp;s=countryName:asc,elementCode:asc,year:desc&amp;c=2,3,4,5,6,7&amp;&quot; #this line downloads the data and renames the data to Apricots.zip
 
-#this for loop extracts each zip file and appends .csv to the original zip file name
+# this for loop extracts each zip file and appends .csv to the original zip file name
 for i in *.zip #this line counts the number of zip files
 do 
   n=$(unzip -lqq $i | awk &#39;{print $NF}&#39;) #-l unzips the files names and -qq does it quietly while only giving the file names inside the zip to the screen. This then pipes the information to awk with searches the output to find the name of the fields
-    e=${n#*.} # this line looks at the file name inside of the zip file and remove everything in front of the . and saves the csv portion
+    e=${n#*.} # this line looks at the file name inside of the zip file and removes everything in front of the . and saves the csv portion
     unzip $i &amp;&amp; mv $n ${i%%.*}&quot;.$e&quot; #this line unzips the file and renames the unzipped file to be the original portion plux csv
-    rm $i #Thi then removes the original zip file because it has already been extracted
+    rm $i #This then removes the original zip file because it has already been extracted
 done
 
 sed &#39;s/, / /g&#39; *.csv &gt; UN_No_Comma.csv #this removes the comma
 sed &#39;s/\&quot;//g&#39; UN_No_Comma.csv &gt; UN_No_Quote.csv #this removes the extra &quot; in the country name
 grep -i + UN_No_Quote.csv &gt; UN_World_Regions.csv #this separates the regions from the countries and save the regions 
-grep -i -v + UN_No_Quote.csv &gt; UN_Countries.csv# this separates the countries and saves countries
+grep -i -v + UN_No_Quote.csv &gt; UN_Countries.csv #this separates the countries and saves countries
 
 yrs=1965:1975:1985:1995:2005
 
@@ -262,50 +258,43 @@ do
     rm UN_Countries_${yr}b.csv
     sort -t&#39;,&#39; -k6 -r UN_Countries_${yr}c.csv | head -5 &gt; ${yr}_top5.txt #sorts the 6th column, puts it in reverse order, then pipes the output to a text file
     rm UN_Countries_${yr}c.csv
+    cat ${yr}_top5.txt
 done
 </code></pre>
 
 <h3>Problem 4</h3>
 
+<pre><code class="bash">#! /bin/bash
+wget -O index.txt http://www1.ncdc.noaa.gov/pub/data/ghcn/daily/
+grep -no &#39;a href=&quot;[^&quot;]*.txt&quot;&#39; index.txt &gt; names.txt #this looks for the pattern a href = textfile name
+sed &#39;s/\&quot;//g&#39; names.txt &gt; names_no_quote.txt #this removes the extra &quot; in the name
+awk -F &#39;=&#39; &#39;{print $2}&#39; names_no_quote.txt &gt; names_only.txt #save only the text after the = sign
+
+i=$(wc -l names_only.txt) #this gathers the number of lines    
+i=${i% *} #this gets just the number from the output of wc
+lines=$(seq 1 ${i}) #this creates a vector from 1 to i
+
+for num in $lines; #this for loop looks at the first line and download the first text file and tells the use wich file is downloading then iterates.
+do
+    c=$(sed -n ${num}p names_only.txt)
+    wget -q ${c} http://www1.ncdc.noaa.gov/pub/data/ghcn/daily/${c}
+    echo &quot;Downloading the&quot; ${c}&quot; file&quot;
+done
+
+</code></pre>
+
+<h3>Problem 5</h3>
+
 <pre><code class="r">hist(LakeHuron)
 </code></pre>
 
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAkFBMVEX9/v0AAAAAADkAAGUAOTkAOWUAOY8AZo8AZrU5AAA5ADk5AGU5OQA5OWU5OY85ZrU5j485j7U5j9plAABlADllAGVlOQBlOY9lZjlltbVltf2POQCPOTmPOWWPZgCPtY+P29qP2/21ZgC1tWW124+1/rW1/v3ajzna/rXa/tra/v39tWX924/9/rX9/tr9/v2dOHbxAAAAMHRSTlP//////////////////////////////////////////////////////////////wBipdB4AAAACXBIWXMAAAsSAAALEgHS3X78AAAQNklEQVR4nO2dbWMitxVGg51u7ST1pjhJW5Nt17Q1qcHw//9dRzMj4BpmkfBF3NE958OyvDzWXB+kmcGM9N0GXPLdtTcArgPinYJ4pyDeKYh3CuKdgninIN4piHcK4p2CeKcg3imIdwrinYJ4pyDeKYh3CuKdgninIN4piHcK4p2CeKcg3imId8o4xb893r5sNuvZ7Uv3v8j86QM/dHU/uXlubz+9HjZ2tPUPtHZtxi5ePDyffER8TCPeLu96fNNXJ7cv69lkMrnbbBbNzXQTnp7c/vfx0+t6dvP3pi8vm4ebHr2c/Ll5/KV5UXyTdK9v063xrfg+EZponn3qXvm033or/23XRmy7efzfYZOu9ftJoAbxb4+TIO1/nfh5uNPctia/vw9SwrN/dC96XU4ivZf+9Yfi+x/7GppYBOHdK6fHxbcvFW2370KzjFV8dBckbLtoGKxX920nvXle3TdSFpNWyl2M3b4sJyEweQovCY9tX390qO/eV7f/uZ/2j3dvttj6vvi7vZ/V3J02A4bcZdiiBvHtvdAJg7pla7npoe1/+mH4OYaC+Lt+8O4e3b7+iPgu0Zj8KTzVjxU3z0fFh5+2/Vnt3fD4NX45aYxV/ME+ftL32SHx7Wu24ndvh2HxMRHfV3vij+3jpfj+8Wv9gk5ThfjAvFd3bKgPUhbN4Bseei9+eKiPiW4fP92NBPvim8yujb2hHvEXQYqPXTMcfR09uOt64/Eev339nvjuIC4m+v38S//K7mivP52LD/U/bdc24i/CkaG+H86b33U8nWuG6Hg610uZ9nsAIX77+vfiY6JtYhleMu8O/PfEh93AP/Z+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" alt="plot of chunk unnamed-chunk-1"/> </p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoCAMAAABNO5HnAAAAkFBMVEX9/v0AAAAAADkAAGUAOTkAOWUAOY8AZo8AZrU5AAA5ADk5AGU5OQA5OWU5OY85ZrU5j485j7U5j9plAABlADllAGVlOQBlOY9lZjlltbVltf2POQCPOTmPOWWPZgCPtY+P29qP2/21ZgC1tWW124+1/rW1/v3ajzna/rXa/tra/v39tWX924/9/rX9/tr9/v2dOHbxAAAAMHRSTlP//////////////////////////////////////////////////////////////wBipdB4AAAACXBIWXMAAAsSAAALEgHS3X78AAAK+klEQVR4nO2dbYPithVGYybdDtl0m0A2bZm8dGg6pMOL//+/q2XLYGPZSMg8yMw5H5bFXF95DkIW+CK+yUHCN/c+gI8CokUgWgSiRSBaBKJFIFoEokUgWgSiRSBaBKJFIFoEokUgWgSiRSBaBKJFIFoEokUgWgSiRSBaBKJFIFqEVvR++fSW54eXp7fqfzXrVUTS3TybvZa3n967jTlbj2jtWu4lurV5ncWIrvdG9ImzHl30xezp7fCSZdlznm+Km0VuHs6e/rv89H54mf2z6KvbYnPRY7fZX4vtb0VQ/aRU8eXepeGjaLuHaaJ4dFVFrpqtl7L3pzbqtovt/zGHdIM//Z6i98vMSPpfJXpt7hS3pblv50aCefTPKuh9m9VYDza+K9qmfTdNbIzgKnLhFl2Gttoun/XRUYuuXZk/+tgFzYt/Ny874ex1Ny8kbLJSwnO929PbNjM7ZCsTYrYd451DR/U8Pv0xX9jt1ZNbt94U/dzIVdxdFC+I9hA0DvcUXd4zncyo2pZWix5Y/se+rF/rnYzoZzsYVFuP8Q7R1R6Fue/NQ/a1MHt1ijbZjrnKu2b7+H/63cfozPbJPtFlzFH0SX+/6HqP+nlsiHaN0W3Rdvv4f/rdp3drq8o1dBgJm+LFbDadi+4fOuo9qjF6cerpTdHFPqc2GkPHQ4quu545WzlPhlVvc/foY3xDdHXSq/ew4/SbjazOjnZ6V2+y2U5tP6ToUo0dHoq/rZ7eFS/5enpnJSzsiNISfYw/F13vUTaxNSHramLSEG2GlX81sp2md48h2pvbnPnvSXqi7dxgce/jGJn0RFej8i3eM9yVBEU/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" alt="plot of chunk unnamed-chunk-3"/> </p>
 
 <pre><code class="r">lowHi &lt;- c(which.min(LakeHuron), which.max(LakeHuron))
 yearExtrema &lt;- attributes(LakeHuron)$tsp[1] - 1 + lowHi
 </code></pre>
 
-<h3>Problem 5</h3>
-
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the <strong>MD</strong> toolbar button for help on Markdown).</p>
-
-<p>When you click the <strong>Knit HTML</strong> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-
-<pre><code class="r">summary(cars)
-</code></pre>
-
-<pre><code>##      speed           dist    
-##  Min.   : 4.0   Min.   :  2  
-##  1st Qu.:12.0   1st Qu.: 26  
-##  Median :15.0   Median : 36  
-##  Mean   :15.4   Mean   : 43  
-##  3rd Qu.:19.0   3rd Qu.: 56  
-##  Max.   :25.0   Max.   :120
-</code></pre>
-
-<p>You can also embed plots, for example:</p>
-
-<pre><code class="r">plot(cars)
-</code></pre>
-
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAGwCAMAAABy/YdMAAAAbFBMVEX9/v0AAAAAADkAAGUAOTkAOWUAOY8AZrU5AAA5ADk5AGU5OY85j9plAABlADllAGVlOQBlZjlltf2POQCPOTmPOWWPjzmPtY+P2/21ZgC1/rW1/v3ajzna24/a/v39tWX924/9/rX9/tr9/v0hhXJqAAAAJHRSTlP//////////////////////////////////////////////wBYLA0NAAAACXBIWXMAAAsSAAALEgHS3X78AAAJjElEQVR4nO3di3LbuBlA4bW7jd2snLTyXqSNGl38/u9YkVbqRKIVUsRPAjjnm061bSYIN8ckCF2gX16E9MvcB6B5GB7K8FCGhzI8lOGhDA9leCjDQxkeyvBQhocyPJThoQwPZXgow0MZHsrwUIaHMjyU4aEMD2V4KMNDGR7K8FCGhzI8lOGhDA9leCjDQxkeyvBQhocyPJThoQwPZXgow0MZHsrwUIaHMjyU4aEMD2V4KMNDGR7K8FCGhzI8lOGhDA9leCjDQxkeakz4O+UsMPyI36too8PvHtufn398GTq0ZjU2/OF52T5uP3wdOLRmNTb8/vOXHx77D61ZecZDjZ7j90/O8SXyrh7K8FAplnP3K2/uMvPTJ2iS3NwdnheGz8rdy0//+tMs59YP34Xv+aSg4kwQ/rSc2/z60TM+HxOEPy7nFs3D5nI9Z/j5xM/xtw+tWRkeyvBQhocavZx7Oq3dvLkry+gzvnn25qahNavxl/r9p9VNQ2tWzvFQhocyPJThoQwPZXgow0MZHsrwUIaHMjyU4aEMD2V4KMNDGR7K8FCGhzI8lOGhDA9leCjDQxkeyvBQhocyPJThody2HMpNjKHcthzKMx7KbcuhvKuHMjyUyzkob+6gApZzblteAs94KJdzUN7VQxkeyvBQhody23Ioty2HcttyKOd4KMNDGR7K8FCGr5JfMco0xZcK3zy04vR4O4Tha+QZD+UZD+UZT+Vdvd5heCjDQxkeyvBQhocyPJThoQwPZXgow0MZHsrwEOcv2xie4eKFWsNPZOatYQw/kx5vjZj2zzf8NOYO7xw/k9nDnzP8RHLb/s3wUG5pCuUGh1B+QwWUZzyUW5pel9vNeDLe1V+V3fI7mYDwNW1bbvh3HZdzD5tqL/WGf8/h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" alt="plot of chunk unnamed-chunk-3"/> </p>
-
-<p>There are inline equations such as \( y_i = \alpha + \beta x_i + e_i \).</p>
-
-<p>And displayed formulas:</p>
-
-<p>\[ \frac{1}{1+\exp(-x)} \]</p>
+<p>The lake levels have fluctuated over the years. The lowest level was recorded at 575.96 in 1964. The highest level was recorded at 581.86 in 1876.</p>
 
 </body>
 
