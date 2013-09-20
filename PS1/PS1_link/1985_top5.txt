@@ -1,0 +1,5 @@
+Cameroon,31,Area Harvested,1985,Ha,88.00000,F 
+Germany,31,Area Harvested,1985,Ha,850.00000,F 
+Israel,31,Area Harvested,1985,Ha,830.00000,
+United States of America,31,Area Harvested,1985,Ha,8093.00000,
+Romania,31,Area Harvested,1985,Ha,8000.00000,F 

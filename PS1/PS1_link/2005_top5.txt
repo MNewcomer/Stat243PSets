@@ -1,0 +1,5 @@
+Ukraine,31,Area Harvested,2005,Ha,9900.00000,
+Tunisia,31,Area Harvested,2005,Ha,8850.00000,
+Nepal,31,Area Harvested,2005,Ha,84.00000,
+Tajikistan,31,Area Harvested,2005,Ha,8200.00000,
+Ecuador,31,Area Harvested,2005,Ha,78.00000,F 
