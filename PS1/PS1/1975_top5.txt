@@ -1,0 +1,5 @@
+USSR,31,Area Harvested,1975,Ha,71000.00000,F 
+Afghanistan,31,Area Harvested,1975,Ha,7080.00000,F 
+Greece,31,Area Harvested,1975,Ha,6800.00000,F 
+Algeria,31,Area Harvested,1975,Ha,6500.00000,F 
+Israel,31,Area Harvested,1975,Ha,650.00000,F 

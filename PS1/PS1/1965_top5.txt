@@ -1,0 +1,5 @@
+Lebanon,31,Area Harvested,1965,Ha,945.00000,
+Chile,31,Area Harvested,1965,Ha,760.00000,F 
+Israel,31,Area Harvested,1965,Ha,700.00000,F 
+USSR,31,Area Harvested,1965,Ha,60000.00000,F 
+Syrian Arab Republic,31,Area Harvested,1965,Ha,6000.00000,F 

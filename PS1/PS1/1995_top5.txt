@@ -1,0 +1,5 @@
+The former Yugoslav Republic of Macedonia,31,Area Harvested,1995,Ha,975.00000,F 
+Cameroon,31,Area Harvested,1995,Ha,92.00000,F 
+Tajikistan,31,Area Harvested,1995,Ha,9000.00000,
+Syrian Arab Republic,31,Area Harvested,1995,Ha,8600.00000,F 
+United States of America,31,Area Harvested,1995,Ha,8575.00000,
