@@ -11,7 +11,7 @@ markdownToHTML('Newcomer_PS2.md','Newcomer_PS2.html', options=c("use_xhml"))
 #pandoc -s Newcomer_PS2.html -o Newcomer_PS2.pdf --highlight-style=tango
 
 
-system("pandoc -s Newcomer_PS2.html -o Newcomer_PS2.pdf") #this command inbetween the quotes needs to be run in the command prompt.
+system("pandoc -s Newcomer_PS2.md -o Newcomer_PS2.pdf --highlight-style=tango -S") #this command inbetween the quotes needs to be run in the command prompt.
 
 #this code worked pretty well
 # Load packages
