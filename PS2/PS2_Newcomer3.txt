@@ -1,0 +1,6 @@
+#! /bin/bash
+echo "Please enter the code # of the type of crop then press enter: "
+read input_variable
+echo "You entered: $input_variable"
+IFS=: # internal field separator
+type=$input_variable # this specifies the type of crop

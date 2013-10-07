@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Problem Set 2</title>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Problem Set 2</h1>
+
+<h1>Michelle Newcomer</h1>
+
+<h1>Stat 242 Fall 2013</h1>
+
+<h3>Problem 1</h3>
+
+<p>a) Explain why the result of this is a vector of length 8.</p>
+
+<p>The vector is length 8 because we assigned this to a, which is located in the global environment. It does not matter what value of data we give to the function WrapFun1 because genFun1 is located outside of the local environment enclosed by WrapFun1. a gets assigned a different value by WrapFun1 only in the local environment.There is no input to return(genFun1()) which would assign a different number to a so genFun1 looks in the global environment for a.</p>
+
+<p>b) Now explain why the result of this is a vector of length 3.</p>
+
+<p>The vector is now length 3 because we assined the lengh of the data to vector a (which is only available in the local environment) and then passed a to genFun2 which made it available in the global environment.</p>
+
+<p>c) And why this is a vector of length 16.</p>
+
+<p>This returns a vector of length 16 because the length of data is not passed from the local to the global environment. a gets assigned the length(data) only locally. Thus x is assigned the value a*2 and whatever a is available in the global environment is what is used.</p>
+
+<h3>Problem 2</h3>
+
+<p>The code below accesses four different frames. The first is the global environment, the second is the environment inside sapply, the third is the function enviornment, and the fourth is the environement defined by x only within the ls() function. In the first frame, all of the variables in the workspace are available. In the second frame, only the functions, and objects defining the function are available. The third frame contains only the function and the variable x, while the fourth frame containes only the variable x. </p>
+
+<pre><code class="r">
+# original
+sapply(0:3, function(x) {
+    ls(envir = sys.frame(x))
+})
+</code></pre>
+
+<pre><code>## [[1]]
+##  [1] &quot;a&quot;             &quot;acts&quot;          &quot;aggregate&quot;     &quot;b&quot;            
+##  [5] &quot;chunks&quot;        &quot;d&quot;             &quot;df&quot;            &quot;e&quot;            
+##  [9] &quot;end&quot;           &quot;findActs&quot;      &quot;findChunks&quot;    &quot;findPeople&quot;   
+## [13] &quot;fun&quot;           &quot;func&quot;          &quot;i&quot;             &quot;len_chunk&quot;    
+## [17] &quot;len_numPeop&quot;   &quot;len_p&quot;         &quot;len_s&quot;         &quot;len_unique&quot;   
+## [21] &quot;lines&quot;         &quot;numActs&quot;       &quot;numScenes&quot;     &quot;plays&quot;        
+## [25] &quot;replace&quot;       &quot;speech&quot;        &quot;start&quot;         &quot;text&quot;         
+## [29] &quot;title&quot;         &quot;tmp&quot;           &quot;tmp_chunks&quot;    &quot;unique&quot;       
+## [33] &quot;unique_lines&quot;  &quot;unique_peop&quot;   &quot;unique_Speech&quot; &quot;uniqueSpeech&quot; 
+## [37] &quot;word_avg&quot;      &quot;word_chunk&quot;    &quot;word_count&quot;    &quot;word_sd&quot;      
+## [41] &quot;year&quot;         
+## 
+## [[2]]
+##  [1] &quot;apat&quot;      &quot;con&quot;       &quot;encoding&quot;  &quot;envir&quot;     &quot;ext&quot;      
+##  [6] &quot;in.file&quot;   &quot;input&quot;     &quot;input.dir&quot; &quot;input2&quot;    &quot;ocode&quot;    
+## [11] &quot;oconc&quot;     &quot;oenvir&quot;    &quot;oopts&quot;     &quot;opat&quot;      &quot;optc&quot;     
+## [16] &quot;optk&quot;      &quot;output&quot;    &quot;pattern&quot;   &quot;progress&quot;  &quot;quiet&quot;    
+## [21] &quot;tangle&quot;    &quot;text&quot;     
+## 
+## [[3]]
+##  [1] &quot;group&quot;  &quot;groups&quot; &quot;i&quot;      &quot;n&quot;      &quot;olines&quot; &quot;output&quot; &quot;pb&quot;    
+##  [8] &quot;res&quot;    &quot;tangle&quot; &quot;text&quot;  
+## 
+## [[4]]
+## [1] &quot;classes&quot;   &quot;expr&quot;      &quot;handlers&quot;  &quot;parentenv&quot;
+</code></pre>
+
+<pre><code class="r"># break this down into different parts
+fun &lt;- function(x) {
+    ls(envir = sys.frame(x))
+    print(sys.frame(x))
+}
+
+
+# try to reproduce the behavior use sapply with each number
+a &lt;- sapply(0, fun)
+</code></pre>
+
+<pre><code>## &lt;environment: R_GlobalEnv&gt;
+</code></pre>
+
+<pre><code class="r">b &lt;- sapply(1, fun)
+</code></pre>
+
+<pre><code>## &lt;environment: 0x0000000013b93d68&gt;
+</code></pre>
+
+<pre><code class="r">d &lt;- sapply(2, fun)
+</code></pre>
+
+<pre><code>## &lt;environment: 0x0000000007b956d8&gt;
+</code></pre>
+
+<pre><code class="r">e &lt;- sapply(3, fun)
+</code></pre>
+
+<pre><code>## &lt;environment: 0x000000000f6d6770&gt;
+</code></pre>
+
+<h3>Problem 3</h3>
+
+<p>I accomplished this task using both UNIX and R tools: </p>
+
+<pre><code class="r">#! /bin/bash
+echo &quot;Please enter the number of samples then press enter: &quot;
+read input_n
+echo &quot;You entered: $input_n. Please wait for approximately 3 minutes.&quot;
+IFS=: # internal field separator
+number=$input_n # this specifies the number of samples
+set seed = 1
+
+# this next line does many things. First it looks at the .bz2 files and grabs only the lines that start with H. Then it reads the lines and appends a random number to each line. 
+# It sorts the lines and then cuts off the appended numbers and obtains only the first number of lines that was specified by the user.
+ # this particular line takes about 3 minutes
+
+bzcat PUMS5_06.TXT.bz2 | grep ^H | while IFS= read -r f; do printf &quot;%05d %s\n&quot; &quot;$RANDOM&quot; &quot;$f&quot;; done | sort -n | cut -c7- | head -n $number &gt; linesForR.txt
+
+./subset.R $number
+</code></pre>
+
+<p>And here is the R code named subset.R that the UNIX shell file calls</p>
+
+<pre><code class="r"># ! /usr/bin/Rscript
+
+args &lt;- commandArgs(TRUE)
+
+numericArg &lt;- as.numeric(args[1])
+charArg &lt;- read.table(&quot;linesForR.txt&quot;, sep = &quot;\t&quot;, head = FALSE)
+class(charArg)
+
+# this set of code initializes the vectors
+BEDRMS &lt;- c(rep(NA, args[1]))
+FINC &lt;- c(rep(NA, args[1]))
+NPF &lt;- c(rep(NA, args[1]))
+ROOMS &lt;- c(rep(NA, args[1]))
+HHT &lt;- c(rep(NA, args[1]))
+P18 &lt;- c(rep(NA, args[1]))
+P65 &lt;- c(rep(NA, args[1]))
+
+
+for (i in 1:args[1]) {
+
+    BEDRMS[i] &lt;- as.numeric(substring(charArg[i, 1], 124, 124))
+    FINC[i] &lt;- as.numeric(substring(charArg[i, 1], 259, 266))
+    NPF[i] &lt;- as.numeric(substring(charArg[i, 1], 218, 219))
+    ROOMS[i] &lt;- as.numeric(substring(charArg[i, 1], 122, 122))
+    HHT[i] &lt;- as.factor(substring(charArg[i, 1], 213, 213))
+    P18[i] &lt;- as.numeric(substring(charArg[i, 1], 216, 217))
+    P65[i] &lt;- as.numeric(substring(charArg[i, 1], 214, 215))
+}
+
+subset &lt;- data.frame(BEDRMS, FINC, NPF, ROOMS, HHT, P18, P65)
+subset
+
+</code></pre>
+
+<p>Here is an example of the output to the screen</p>
+
+<pre><code class="r">BEDRMS  FINC NPF ROOMS HHT P18 P65
+1      1 14000   4     2   1   2   0
+2      2     0   0     4   1   0   0
+3      1 13500   3     3   1   2   0
+4      2     0   0     6   1   0   1
+5      0     0   0     1   1   0   1
+6      1     0   0     3   1   0   0
+7     NA     0   0    NA   1   0   0
+
+</code></pre>
+
+<h3>Problem 4</h3>
+
+<p>For the analysis of Shakespeare&#39;s plays, structural data about each play, person, and chunk of speech was gathered from a text file. The year, title, number of acts, number of scenes, length of each chunk of speech, number of characters, total word count, average number of words per chunk, and standard deviation of the number of words per chunk were analyzed. </p>
+
+<pre><code class="r">library(stringr)
+text &lt;- scan(&quot;Shakespeare.txt&quot;, character(0), quote = NULL, sep = &quot;\t&quot;)
+
+start &lt;- as.integer(grep(&quot;^[[:digit:]]{4}&quot;, text, perl = TRUE))
+end &lt;- as.integer(grep(&quot;THE END&quot;, text, perl = TRUE))
+len_s &lt;- length(start)
+
+# places each play into a list
+plays &lt;- list()
+
+for (i in 2:(len_s - 1)) {
+    plays[[i - 1]] &lt;- text[start[i]:end[i]]
+}
+
+plays[[4]] &lt;- NULL  #this removes the fourth play which is problematic
+len_p &lt;- length(plays)
+
+# places the year into a vector
+year &lt;- c()
+for (i in 1:len_p) {
+    year[i] &lt;- as.integer(plays[[i]][[1]])
+}
+
+# places the title into a vector
+title &lt;- c()
+for (i in 1:len_p) {
+    title[i] &lt;- as.character(plays[[i]][[2]])
+}
+
+# this function finds all of the acts and scenes
+acts &lt;- c()
+
+findActs &lt;- function(x) {
+    numActsTmp &lt;- (grep(&quot;^ACT&quot;, plays[[x]], perl = TRUE, ignore.case = TRUE))
+    len_a &lt;- length(numActsTmp)
+
+    for (i in 1:len_a) {
+        acts[i] &lt;- as.character(plays[[x]][[numActsTmp[i]]])
+    }
+
+    return(acts)
+}
+
+# count the number of acts and scenes for each play. Counting the number
+# of times scene 1 occurs provides the number of Acts. Counting the number
+# of time Act appears provides the number of scenes
+numScenes &lt;- c()
+numActs &lt;- c()
+
+for (i in 1:len_p) {
+    tmp &lt;- findActs(i)
+    numActs[i] &lt;- length(grep(&quot;Scene 1|Scene I|(?&lt;=\\SC_)([1]$)&quot;, tmp, perl = TRUE, 
+        ignore.case = TRUE))
+    numScenes[i] &lt;- length(tmp)
+}
+
+
+# find their chunks of speech
+
+tmp_chunks &lt;- c()
+
+findChunks &lt;- function(x) {
+    tmp_chunks &lt;- grep(&quot;^([[:space:]]{2,}+[[:upper:]]{4,30}\\.)&quot;, plays[[x]], 
+        perl = TRUE, ignore.case = TRUE)
+    return(tmp_chunks)
+}
+
+chunks &lt;- list()
+for (i in 1:length(plays)) {
+    chunks[[i]] &lt;- findChunks(i)
+}
+
+len_chunk &lt;- as.integer(lapply(chunks, length))
+
+# formatting chunks of dialogue and binding lines of speech together
+lines &lt;- c()
+replace &lt;- c()
+aggregate &lt;- c()
+
+findPeople &lt;- function(x) {
+    for (i in 1:length(chunks[[x]])) {
+        lines &lt;- plays[[x]][chunks[[x]][[i]]:(chunks[[x]][[i]] - 1)]
+        replace &lt;- str_replace_all(string = lines, pattern = &quot;  &quot;, repl = &quot;&quot;)
+        aggregate[[i]] &lt;- paste(replace, collapse = &quot; &quot;)
+    }
+    return(aggregate)
+}
+
+speech &lt;- list()
+for (i in 1:length(plays)) {
+    speech[[i]] &lt;- findPeople(i)
+}
+
+# finding the individual speakers and their chunks of text this function
+# places each person into a list, and places each person&#39;s spoken text
+# into a list.
+unique_Speech &lt;- list()
+unique_lines &lt;- list()
+len_unique &lt;- c()
+len_numPeop &lt;- c()
+unique &lt;- list()
+unique_peop &lt;- list()
+
+uniqueSpeech &lt;- function(x) {
+    matches &lt;- gregexpr(&quot;^([[:upper:]]{4,20}\\.)&quot;, speech[[x]])
+    names &lt;- regmatches(speech[[x]], matches)
+    unique &lt;- unique.default(sapply(names, unique))
+    len_unique &lt;- length(unique)
+
+    for (i in 1:len_unique) {
+        lines &lt;- as.integer(grep(unique[i], speech[[x]], perl = TRUE, ignore.case = TRUE))
+        unique_lines[[i]] &lt;- speech[[x]][lines[]]
+    }
+    result = c(unique_lines, len_unique)
+    return(result)
+}
+
+
+for (i in 1:length(speech)) {
+    func &lt;- uniqueSpeech(i)
+    len_numPeop[i] &lt;- as.integer(func[length(func)])
+    unique_Speech[[i]] &lt;- func[1:(length(func) - 1)]
+}
+
+# count the number of words, find the average and standard deviation
+word_count &lt;- sapply(gregexpr(&quot;\\W+&quot;, unique_Speech), length) + 1
+
+word_chunk &lt;- c()
+word_avg &lt;- c()
+word_sd &lt;- c()
+
+for (i in 1:length(unique_Speech)) {
+    word_chunk &lt;- sapply(gregexpr(&quot;\\W+&quot;, unique_Speech[[i]]), length) + 1
+    word_avg[i] &lt;- sum(word_chunk/length(unique_Speech[[i]]))
+    word_sd[i] &lt;- sd(word_chunk)
+}
+
+df &lt;- data.frame(year, title, numActs, numScenes, len_chunk, len_numPeop, word_count, 
+    word_avg, word_sd)
+</code></pre>
+
+<p>Here is the first few entries of the dataframe:</p>
+
+<pre><code class="r">head(df)
+</code></pre>
+
+<pre><code>##   year                                    title numActs numScenes
+## 1 1603                 ALLS WELL THAT ENDS WELL       5        23
+## 2 1607      THE TRAGEDY OF ANTONY AND CLEOPATRA       5        33
+## 3 1601                           AS YOU LIKE IT       5         5
+## 4 1608                THE TRAGEDY OF CORIOLANUS       5         5
+## 5 1609                                CYMBELINE       5         5
+## 6 1604 THE TRAGEDY OF HAMLET, PRINCE OF DENMARK       5         5
+##   len_chunk len_numPeop word_count word_avg word_sd
+## 1       835          17      19169   1128.5  1169.7
+## 2      1138          45      25822    574.8   984.6
+## 3       796          21      20476    976.0  1350.1
+## 4       899          29      18353    633.8   793.7
+## 5       806          27      16237    602.3   594.1
+## 6       432           2        553    276.5   386.8
+</code></pre>
+
+<p>Here is a plot of the number of characters over time:</p>
+
+<pre><code class="r">plot(df$year, df$len_numPeop)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-81.png" alt="plot of chunk unnamed-chunk-8"> </p>
+
+<pre><code class="r">plot(df$year, df$len_chunk)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-82.png" alt="plot of chunk unnamed-chunk-8"> </p>
+
+<pre><code class="r">plot(df$year, df$word_count)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-83.png" alt="plot of chunk unnamed-chunk-8"> </p>
+
+</body>
+
+</html>

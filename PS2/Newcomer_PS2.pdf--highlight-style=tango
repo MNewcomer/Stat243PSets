@@ -1,0 +1,529 @@
+\documentclass[]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx}
+% Redefine \includegraphics so that, unless explicit options are
+% given, the image width will not exceed the width of the page.
+% Images get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\ScaleIfNeeded{%
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+{%
+ \catcode`\@=11\relax%
+ \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
+}%
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{Problem Set 2}\label{problem-set-2}
+
+\section{Michelle Newcomer}\label{michelle-newcomer}
+
+\section{Stat 242 Fall 2013}\label{stat-242-fall-2013}
+
+\subsubsection{Problem 1}\label{problem-1}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Explain why the result of this is a vector of length 8.
+\end{enumerate}
+
+The vector is length 8 because we assigned this to a, which is located
+in the global environment. It does not matter what value of data we give
+to the function WrapFun1 because genFun1 is located outside of the local
+environment enclosed by WrapFun1. a gets assigned a different value by
+WrapFun1 only in the local environment.There is no input to
+return(genFun1()) which would assign a different number to a so genFun1
+looks in the global environment for a.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Now explain why the result of this is a vector of length 3.
+\end{enumerate}
+
+The vector is now length 3 because we assined the lengh of the data to
+vector a (which is only available in the local environment) and then
+passed a to genFun2 which made it available in the global environment.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  And why this is a vector of length 16.
+\end{enumerate}
+
+This returns a vector of length 16 because the length of data is not
+passed from the local to the global environment. a gets assigned the
+length(data) only locally. Thus x is assigned the value a*2 and whatever
+a is available in the global environment is what is used.
+
+\subsubsection{Problem 2}\label{problem-2}
+
+The code below accesses four different frames. The first is the global
+environment, the second is the environment inside sapply, the third is
+the function enviornment, and the fourth is the environement defined by
+x only within the ls() function. In the first frame, all of the
+variables in the workspace are available. In the second frame, only the
+functions, and objects defining the function are available. The third
+frame contains only the function and the variable x, while the fourth
+frame containes only the variable x.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\CommentTok{# original}
+\KeywordTok{sapply}\NormalTok{(}\DecValTok{0}\NormalTok{:}\DecValTok{3}\NormalTok{, function(x) \{}
+    \KeywordTok{ls}\NormalTok{(}\DataTypeTok{envir =} \KeywordTok{sys.frame}\NormalTok{(x))}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##  [1] "a"             "acts"          "aggregate"     "b"            
+##  [5] "chunks"        "d"             "df"            "e"            
+##  [9] "end"           "findActs"      "findChunks"    "findPeople"   
+## [13] "fun"           "func"          "i"             "len_chunk"    
+## [17] "len_numPeop"   "len_p"         "len_s"         "len_unique"   
+## [21] "lines"         "numActs"       "numScenes"     "plays"        
+## [25] "replace"       "speech"        "start"         "text"         
+## [29] "title"         "tmp"           "tmp_chunks"    "unique"       
+## [33] "unique_lines"  "unique_peop"   "unique_Speech" "uniqueSpeech" 
+## [37] "word_avg"      "word_chunk"    "word_count"    "word_sd"      
+## [41] "year"         
+## 
+## [[2]]
+##  [1] "apat"      "con"       "encoding"  "envir"     "ext"      
+##  [6] "in.file"   "input"     "input.dir" "input2"    "ocode"    
+## [11] "oconc"     "oenvir"    "oopts"     "opat"      "optc"     
+## [16] "optk"      "output"    "pattern"   "progress"  "quiet"    
+## [21] "tangle"    "text"     
+## 
+## [[3]]
+##  [1] "group"  "groups" "i"      "n"      "olines" "output" "pb"    
+##  [8] "res"    "tangle" "text"  
+## 
+## [[4]]
+## [1] "classes"   "expr"      "handlers"  "parentenv"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# break this down into different parts}
+\NormalTok{fun <-}\StringTok{ }\NormalTok{function(x) \{}
+    \KeywordTok{ls}\NormalTok{(}\DataTypeTok{envir =} \KeywordTok{sys.frame}\NormalTok{(x))}
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{sys.frame}\NormalTok{(x))}
+\NormalTok{\}}
+
+
+\CommentTok{# try to reproduce the behavior use sapply with each number}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{0}\NormalTok{, fun)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <environment: R_GlobalEnv>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\NormalTok{, fun)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <environment: 0x0000000013b93d68>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{2}\NormalTok{, fun)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <environment: 0x0000000007b956d8>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{3}\NormalTok{, fun)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <environment: 0x000000000f6d6770>
+\end{verbatim}
+
+\subsubsection{Problem 3}\label{problem-3}
+
+I accomplished this task using both UNIX and R tools:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#! /bin/bash}
+\NormalTok{echo }\StringTok{"Please enter the number of samples then press enter: "}
+\NormalTok{read input_n}
+\NormalTok{echo }\StringTok{"You entered: $input_n. Please wait for approximately 3 minutes."}
+\NormalTok{IFS=}\ErrorTok{:}\StringTok{ }\CommentTok{# internal field separator}
+\NormalTok{number=}\ErrorTok{$}\NormalTok{input_n }\CommentTok{# this specifies the number of samples}
+\NormalTok{set seed =}\StringTok{ }\DecValTok{1}
+
+\CommentTok{# this next line does many things. First it looks at the .bz2 files and grabs only the lines that start with H. Then it reads the lines and appends a random number to each line. }
+\CommentTok{# It sorts the lines and then cuts off the appended numbers and obtains only the first number of lines that was specified by the user.}
+ \CommentTok{# this particular line takes about 3 minutes}
+
+\NormalTok{bzcat PUMS5_06.TXT.bz2 |}\StringTok{ }\NormalTok{grep ^H |}\StringTok{ }\NormalTok{while IFS=}\StringTok{ }\NormalTok{read -r f; do printf }\StringTok{"%05d %s}\CharTok{\textbackslash{}n}\StringTok{"} \StringTok{"$RANDOM"} \StringTok{"$f"}\NormalTok{; done |}\StringTok{ }\NormalTok{sort -n |}\StringTok{ }\NormalTok{cut -c7-}\StringTok{ }\ErrorTok{|}\StringTok{ }\NormalTok{head -n $number >}\StringTok{ }\NormalTok{linesForR.txt}
+
+\NormalTok{./subset.R $number}
+\end{Highlighting}
+\end{Shaded}
+
+And here is the R code named subset.R that the UNIX shell file calls
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# ! /usr/bin/Rscript}
+
+\NormalTok{args <-}\StringTok{ }\KeywordTok{commandArgs}\NormalTok{(}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{numericArg <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(args[}\DecValTok{1}\NormalTok{])}
+\NormalTok{charArg <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"linesForR.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{head =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{class}\NormalTok{(charArg)}
+
+\CommentTok{# this set of code initializes the vectors}
+\NormalTok{BEDRMS <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{, args[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{FINC <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{, args[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{NPF <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{, args[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{ROOMS <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{, args[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{HHT <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{, args[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{P18 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{, args[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{P65 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{, args[}\DecValTok{1}\NormalTok{]))}
+
+
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:args[}\DecValTok{1}\NormalTok{]) \{}
+    
+    \NormalTok{BEDRMS[i] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{substring}\NormalTok{(charArg[i, }\DecValTok{1}\NormalTok{], }\DecValTok{124}\NormalTok{, }\DecValTok{124}\NormalTok{))}
+    \NormalTok{FINC[i] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{substring}\NormalTok{(charArg[i, }\DecValTok{1}\NormalTok{], }\DecValTok{259}\NormalTok{, }\DecValTok{266}\NormalTok{))}
+    \NormalTok{NPF[i] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{substring}\NormalTok{(charArg[i, }\DecValTok{1}\NormalTok{], }\DecValTok{218}\NormalTok{, }\DecValTok{219}\NormalTok{))}
+    \NormalTok{ROOMS[i] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{substring}\NormalTok{(charArg[i, }\DecValTok{1}\NormalTok{], }\DecValTok{122}\NormalTok{, }\DecValTok{122}\NormalTok{))}
+    \NormalTok{HHT[i] <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(}\KeywordTok{substring}\NormalTok{(charArg[i, }\DecValTok{1}\NormalTok{], }\DecValTok{213}\NormalTok{, }\DecValTok{213}\NormalTok{))}
+    \NormalTok{P18[i] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{substring}\NormalTok{(charArg[i, }\DecValTok{1}\NormalTok{], }\DecValTok{216}\NormalTok{, }\DecValTok{217}\NormalTok{))}
+    \NormalTok{P65[i] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{substring}\NormalTok{(charArg[i, }\DecValTok{1}\NormalTok{], }\DecValTok{214}\NormalTok{, }\DecValTok{215}\NormalTok{))}
+\NormalTok{\}}
+
+\NormalTok{subset <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(BEDRMS, FINC, NPF, ROOMS, HHT, P18, P65)}
+\NormalTok{subset}
+\end{Highlighting}
+\end{Shaded}
+
+Here is an example of the output to the screen
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{BEDRMS  FINC NPF ROOMS HHT P18 P65}
+\DecValTok{1}      \DecValTok{1} \DecValTok{14000}   \DecValTok{4}     \DecValTok{2}   \DecValTok{1}   \DecValTok{2}   \DecValTok{0}
+\DecValTok{2}      \DecValTok{2}     \DecValTok{0}   \DecValTok{0}     \DecValTok{4}   \DecValTok{1}   \DecValTok{0}   \DecValTok{0}
+\DecValTok{3}      \DecValTok{1} \DecValTok{13500}   \DecValTok{3}     \DecValTok{3}   \DecValTok{1}   \DecValTok{2}   \DecValTok{0}
+\DecValTok{4}      \DecValTok{2}     \DecValTok{0}   \DecValTok{0}     \DecValTok{6}   \DecValTok{1}   \DecValTok{0}   \DecValTok{1}
+\DecValTok{5}      \DecValTok{0}     \DecValTok{0}   \DecValTok{0}     \DecValTok{1}   \DecValTok{1}   \DecValTok{0}   \DecValTok{1}
+\DecValTok{6}      \DecValTok{1}     \DecValTok{0}   \DecValTok{0}     \DecValTok{3}   \DecValTok{1}   \DecValTok{0}   \DecValTok{0}
+\DecValTok{7}     \OtherTok{NA}     \DecValTok{0}   \DecValTok{0}    \OtherTok{NA}   \DecValTok{1}   \DecValTok{0}   \DecValTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Problem 4}\label{problem-4}
+
+For the analysis of Shakespeare's plays, structural data about each
+play, person, and chunk of speech was gathered from a text file. The
+year, title, number of acts, number of scenes, length of each chunk of
+speech, number of characters, total word count, average number of words
+per chunk, and standard deviation of the number of words per chunk were
+analyzed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(stringr)}
+\NormalTok{text <-}\StringTok{ }\KeywordTok{scan}\NormalTok{(}\StringTok{"Shakespeare.txt"}\NormalTok{, }\KeywordTok{character}\NormalTok{(}\DecValTok{0}\NormalTok{), }\DataTypeTok{quote =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+
+\NormalTok{start <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{grep}\NormalTok{(}\StringTok{"^[[:digit:]]\{4\}"}\NormalTok{, text, }\DataTypeTok{perl =} \OtherTok{TRUE}\NormalTok{))}
+\NormalTok{end <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{grep}\NormalTok{(}\StringTok{"THE END"}\NormalTok{, text, }\DataTypeTok{perl =} \OtherTok{TRUE}\NormalTok{))}
+\NormalTok{len_s <-}\StringTok{ }\KeywordTok{length}\NormalTok{(start)}
+
+\CommentTok{# places each play into a list}
+\NormalTok{plays <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+
+\NormalTok{for (i in }\DecValTok{2}\NormalTok{:(len_s -}\StringTok{ }\DecValTok{1}\NormalTok{)) \{}
+    \NormalTok{plays[[i -}\StringTok{ }\DecValTok{1}\NormalTok{]] <-}\StringTok{ }\NormalTok{text[start[i]:end[i]]}
+\NormalTok{\}}
+
+\NormalTok{plays[[}\DecValTok{4}\NormalTok{]] <-}\StringTok{ }\OtherTok{NULL}  \CommentTok{#this removes the fourth play which is problematic}
+\NormalTok{len_p <-}\StringTok{ }\KeywordTok{length}\NormalTok{(plays)}
+
+\CommentTok{# places the year into a vector}
+\NormalTok{year <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:len_p) \{}
+    \NormalTok{year[i] <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(plays[[i]][[}\DecValTok{1}\NormalTok{]])}
+\NormalTok{\}}
+
+\CommentTok{# places the title into a vector}
+\NormalTok{title <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:len_p) \{}
+    \NormalTok{title[i] <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(plays[[i]][[}\DecValTok{2}\NormalTok{]])}
+\NormalTok{\}}
+
+\CommentTok{# this function finds all of the acts and scenes}
+\NormalTok{acts <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+
+\NormalTok{findActs <-}\StringTok{ }\NormalTok{function(x) \{}
+    \NormalTok{numActsTmp <-}\StringTok{ }\NormalTok{(}\KeywordTok{grep}\NormalTok{(}\StringTok{"^ACT"}\NormalTok{, plays[[x]], }\DataTypeTok{perl =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{ignore.case =} \OtherTok{TRUE}\NormalTok{))}
+    \NormalTok{len_a <-}\StringTok{ }\KeywordTok{length}\NormalTok{(numActsTmp)}
+    
+    \NormalTok{for (i in }\DecValTok{1}\NormalTok{:len_a) \{}
+        \NormalTok{acts[i] <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(plays[[x]][[numActsTmp[i]]])}
+    \NormalTok{\}}
+    
+    \KeywordTok{return}\NormalTok{(acts)}
+\NormalTok{\}}
+
+\CommentTok{# count the number of acts and scenes for each play. Counting the number}
+\CommentTok{# of times scene 1 occurs provides the number of Acts. Counting the number}
+\CommentTok{# of time Act appears provides the number of scenes}
+\NormalTok{numScenes <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{numActs <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:len_p) \{}
+    \NormalTok{tmp <-}\StringTok{ }\KeywordTok{findActs}\NormalTok{(i)}
+    \NormalTok{numActs[i] <-}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{grep}\NormalTok{(}\StringTok{"Scene 1|Scene I|(?<=}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{SC_)([1]$)"}\NormalTok{, tmp, }\DataTypeTok{perl =} \OtherTok{TRUE}\NormalTok{, }
+        \DataTypeTok{ignore.case =} \OtherTok{TRUE}\NormalTok{))}
+    \NormalTok{numScenes[i] <-}\StringTok{ }\KeywordTok{length}\NormalTok{(tmp)}
+\NormalTok{\}}
+
+
+\CommentTok{# find their chunks of speech}
+
+\NormalTok{tmp_chunks <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+
+\NormalTok{findChunks <-}\StringTok{ }\NormalTok{function(x) \{}
+    \NormalTok{tmp_chunks <-}\StringTok{ }\KeywordTok{grep}\NormalTok{(}\StringTok{"^([[:space:]]\{2,\}+[[:upper:]]\{4,30\}}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.)"}\NormalTok{, plays[[x]], }
+        \DataTypeTok{perl =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{ignore.case =} \OtherTok{TRUE}\NormalTok{)}
+    \KeywordTok{return}\NormalTok{(tmp_chunks)}
+\NormalTok{\}}
+
+\NormalTok{chunks <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(plays)) \{}
+    \NormalTok{chunks[[i]] <-}\StringTok{ }\KeywordTok{findChunks}\NormalTok{(i)}
+\NormalTok{\}}
+
+\NormalTok{len_chunk <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(chunks, length))}
+
+\CommentTok{# formatting chunks of dialogue and binding lines of speech together}
+\NormalTok{lines <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{replace <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{aggregate <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+
+\NormalTok{findPeople <-}\StringTok{ }\NormalTok{function(x) \{}
+    \NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(chunks[[x]])) \{}
+        \NormalTok{lines <-}\StringTok{ }\NormalTok{plays[[x]][chunks[[x]][[i]]:(chunks[[x]][[i]] -}\StringTok{ }\DecValTok{1}\NormalTok{)]}
+        \NormalTok{replace <-}\StringTok{ }\KeywordTok{str_replace_all}\NormalTok{(}\DataTypeTok{string =} \NormalTok{lines, }\DataTypeTok{pattern =} \StringTok{"  "}\NormalTok{, }\DataTypeTok{repl =} \StringTok{""}\NormalTok{)}
+        \NormalTok{aggregate[[i]] <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(replace, }\DataTypeTok{collapse =} \StringTok{" "}\NormalTok{)}
+    \NormalTok{\}}
+    \KeywordTok{return}\NormalTok{(aggregate)}
+\NormalTok{\}}
+
+\NormalTok{speech <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(plays)) \{}
+    \NormalTok{speech[[i]] <-}\StringTok{ }\KeywordTok{findPeople}\NormalTok{(i)}
+\NormalTok{\}}
+
+\CommentTok{# finding the individual speakers and their chunks of text this function}
+\CommentTok{# places each person into a list, and places each person's spoken text}
+\CommentTok{# into a list.}
+\NormalTok{unique_Speech <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{unique_lines <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{len_unique <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{len_numPeop <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{unique <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{unique_peop <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+
+\NormalTok{uniqueSpeech <-}\StringTok{ }\NormalTok{function(x) \{}
+    \NormalTok{matches <-}\StringTok{ }\KeywordTok{gregexpr}\NormalTok{(}\StringTok{"^([[:upper:]]\{4,20\}}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.)"}\NormalTok{, speech[[x]])}
+    \NormalTok{names <-}\StringTok{ }\KeywordTok{regmatches}\NormalTok{(speech[[x]], matches)}
+    \NormalTok{unique <-}\StringTok{ }\KeywordTok{unique.default}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(names, unique))}
+    \NormalTok{len_unique <-}\StringTok{ }\KeywordTok{length}\NormalTok{(unique)}
+    
+    \NormalTok{for (i in }\DecValTok{1}\NormalTok{:len_unique) \{}
+        \NormalTok{lines <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{grep}\NormalTok{(unique[i], speech[[x]], }\DataTypeTok{perl =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{ignore.case =} \OtherTok{TRUE}\NormalTok{))}
+        \NormalTok{unique_lines[[i]] <-}\StringTok{ }\NormalTok{speech[[x]][lines[]]}
+    \NormalTok{\}}
+    \NormalTok{result =}\StringTok{ }\KeywordTok{c}\NormalTok{(unique_lines, len_unique)}
+    \KeywordTok{return}\NormalTok{(result)}
+\NormalTok{\}}
+
+
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(speech)) \{}
+    \NormalTok{func <-}\StringTok{ }\KeywordTok{uniqueSpeech}\NormalTok{(i)}
+    \NormalTok{len_numPeop[i] <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(func[}\KeywordTok{length}\NormalTok{(func)])}
+    \NormalTok{unique_Speech[[i]] <-}\StringTok{ }\NormalTok{func[}\DecValTok{1}\NormalTok{:(}\KeywordTok{length}\NormalTok{(func) -}\StringTok{ }\DecValTok{1}\NormalTok{)]}
+\NormalTok{\}}
+
+\CommentTok{# count the number of words, find the average and standard deviation}
+\NormalTok{word_count <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\KeywordTok{gregexpr}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{W+"}\NormalTok{, unique_Speech), length) +}\StringTok{ }\DecValTok{1}
+
+\NormalTok{word_chunk <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{word_avg <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{word_sd <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(unique_Speech)) \{}
+    \NormalTok{word_chunk <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\KeywordTok{gregexpr}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{W+"}\NormalTok{, unique_Speech[[i]]), length) +}\StringTok{ }\DecValTok{1}
+    \NormalTok{word_avg[i] <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(word_chunk/}\KeywordTok{length}\NormalTok{(unique_Speech[[i]]))}
+    \NormalTok{word_sd[i] <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(word_chunk)}
+\NormalTok{\}}
+
+\NormalTok{df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(year, title, numActs, numScenes, len_chunk, len_numPeop, word_count, }
+    \NormalTok{word_avg, word_sd)}
+\end{Highlighting}
+\end{Shaded}
+
+Here is the first few entries of the dataframe:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   year                                    title numActs numScenes
+## 1 1603                 ALLS WELL THAT ENDS WELL       5        23
+## 2 1607      THE TRAGEDY OF ANTONY AND CLEOPATRA       5        33
+## 3 1601                           AS YOU LIKE IT       5         5
+## 4 1608                THE TRAGEDY OF CORIOLANUS       5         5
+## 5 1609                                CYMBELINE       5         5
+## 6 1604 THE TRAGEDY OF HAMLET, PRINCE OF DENMARK       5         5
+##   len_chunk len_numPeop word_count word_avg word_sd
+## 1       835          17      19169   1128.5  1169.7
+## 2      1138          45      25822    574.8   984.6
+## 3       796          21      20476    976.0  1350.1
+## 4       899          29      18353    633.8   793.7
+## 5       806          27      16237    602.3   594.1
+## 6       432           2        553    276.5   386.8
+\end{verbatim}
+
+Here is a plot of the number of characters over time:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(df$year, df$len_numPeop)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figure/unnamed-chunk-81.png}
+\caption{plot of chunk unnamed-chunk-8}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(df$year, df$len_chunk)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figure/unnamed-chunk-82.png}
+\caption{plot of chunk unnamed-chunk-8}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(df$year, df$word_count)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figure/unnamed-chunk-83.png}
+\caption{plot of chunk unnamed-chunk-8}
+\end{figure}
+
+\end{document}
