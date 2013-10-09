@@ -1,3 +1,12 @@
+#workflow
+require(knitr) 
+require(markdown) 
+knit("Newcomer_PS2.Rmd") 
+system("pandoc -s Newcomer_PS2.md -t latex -o Newcomer_PS2.pdf --highlight-style=tango -S")
+
+#use this in the first code chunk
+options(replace.assign=TRUE,width=78)
+
 # Define your report 
 system("RMDFILE=Newcomer_PS2") 
 # Knit the Rmd to an Md file 
