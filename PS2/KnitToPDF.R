@@ -1,7 +1,14 @@
 #workflow
 require(knitr) 
 require(markdown) 
-knit("Newcomer_PS2.Rmd") 
+filen <- "module3_calc"
+knit(paste0(filen,".Rmd"))
+system(paste0("pandoc -s ", paste0(filen,".md"), " -t latex -o ", paste0(filen,".pdf"), " --highlight-style=tango -S"))
+
+
+
+
+knit("module3_calc.Rmd") 
 system("pandoc -s Newcomer_PS2.md -t latex -o Newcomer_PS2.pdf --highlight-style=tango -S")
 
 #use this in the first code chunk
