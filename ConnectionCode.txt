@@ -4,8 +4,6 @@ scp -r ~/LecturePractice/unit2_link/* s243-22@scf-ug03.berkeley.edu:~/Documents/
 scp -r ~/LecturePractice/unit4_link/* s243-22@scf-ug03.berkeley.edu:~/Documents/LecturePractice/unit4_link/
 scp -r ~/Stat242PSFiles/PS1_link/PS1_Newcomer.sh s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS1_link/
 scp -r ~/Stat242PSFiles/PS2_link/subset.R s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS2_link/
-scp -r ~/Stat242PSFiles/PS3_link/PS3_Problem1.R s243-22@arwen.berkeley.edu:~/Documents/Stat242PSFiles/PS3_link/
-
 
 scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/LecturePractice/unit2_link/* ~/LecturePractice/unit2_link/
 scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/LecturePractice/unit4_link/* ~/LecturePractice/unit4_link/
@@ -13,7 +11,6 @@ scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS1_link/* ~/Sta
 scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS2_link/plot.png ~/Stat242PSFiles/PS2_link/
 scp -r s243-22@scf-ug03.berkeley.edu:/scratch/users/paciorek/PUMS5_06.TXT.bz2 ~/Stat242PSFiles/PS2_link/
 scp -r s243-22@scf-ug03.berkeley.edu:~/Documents/Stat242PSFiles/PS2_link/linesForR.txt ~/Stat242PSFiles/PS2_link/
-scp -r s243-22@arwen.berkeley.edu:~/Documents/Stat242PSFiles/PS3_link/PS5.Rdata ~/Stat242PSFiles/PS3_link/
 
 function putscf() {
    scp -r ~/$1 s243-22@scf-ug03.berkeley.edu:~/$2 
@@ -31,10 +28,8 @@ function putscf() {
 putscf LecturePractice/unit2_link/forloopDownload.sh Documents/LecturePractice/unit2_link/
 
 C:/Users/Michelle\ Newcomer/AppData/Local/GitHub/PortableGit_015aa71ef18c047ce8509ffb2f9e4bb0e3e73f13/bin/
+
 ssh -Y s243-22@scf-ug03.berkeley.edu
-ssh -Y s243-22@arwen.berkeley.edu
-Pk1lvsme2
-shift ~ ctrl z quits ssh
 
 
 Git
