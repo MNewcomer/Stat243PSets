@@ -1,0 +1,13 @@
+sample.interval=20000
+.Fortran rdist makeTS 
+- makeTS 
+exp makeTS 
+exp makeTS 
+chol.default chol standardGeneric chol makeTS 
+chol.default chol standardGeneric chol makeTS 
+chol.default chol standardGeneric chol makeTS 
+chol.default chol standardGeneric chol makeTS 
+chol.default chol standardGeneric chol makeTS 
+chol.default chol standardGeneric chol makeTS 
+chol.default chol standardGeneric chol makeTS 
+chol.default chol standardGeneric chol makeTS 
