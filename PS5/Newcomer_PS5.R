@@ -1,0 +1,246 @@
+#------Problem 1------
+#Complete
+
+#------Problem 2----------
+# Part a
+require(VGAM)
+require(stats)
+
+#plot pareto distribution
+alpha <- 0.5; beta <- 3; 
+m <- 1000 # number of observations
+set.seed(0)
+x_pareto <- rpareto(m, location = alpha, shape = beta)
+f_pareto <- dpareto(x_pareto, location = alpha, shape = beta)  # density of x under f
+pareto<-cbind(x_pareto,f_pareto)
+pareto<-pareto[ order(pareto[,1]), ] 
+plot(pareto[,1],pareto[,2],type='l',xlim=c(0,6),ylim=c(0,1),xlab="x values",ylab="Density")
+
+
+#plot exponential distribution
+k <- 1; 
+m <- 1000 # number of observations
+set.seed(0)
+x_exp <- rexp(m, rate=1/k)
+f_exp <- dexp(x_exp, rate=1/k,log=FALSE)  # density of x under f
+exp<-cbind(x_exp,f_exp)
+exp<-exp[ order(exp[,1]), ] 
+lines(exp[,1],exp[,2],type='l',col='red')
+legend(3,0.8,c("Pareto","Exponential"),lty=1,col=c("black","red"),bty="n")
+
+# part b: f is the exponential density
+
+m <- 10000 # number of samples for each estimator
+set.seed(0)
+k <- 1; 
+x_exp <- rexp(m, rate=1/k)+2
+f_exp <- dexp(x_exp-2, rate=1/k,log=FALSE) # density of x under g
+exp<-cbind(x_exp,f_exp)
+exp<-exp[ order(exp[,1]), ] 
+plot(exp[,1],exp[,2],type='l',col='red',xlim=c(0,8),ylim=c(0,1))
+
+alpha <- 2; beta <- 3; 
+m <- 10000 # number of observations
+set.seed(0)
+x_pareto <- rpareto(m, location = alpha, shape = beta)
+g_pareto <- dpareto(x_pareto, location = alpha, shape = beta)  # density of x under f
+pareto<-cbind(x_pareto,g_pareto)
+pareto<-pareto[ order(pareto[,1]), ] 
+lines(pareto[,1],pareto[,2],type='l',ylim=c(0,1))
+legend(3,0.8,c("Pareto","Exponential"),lty=1,col=c("black","red"),bty="n")
+
+
+weight<-f_exp/g_pareto
+weight<-sort(weight)
+
+#plot weights
+index<-which(weight<=100)
+weight2<-weight[index]
+hist(weight2,breaks=200,xlim=c(0,20))
+hist(weight2*x_pareto[index],breaks=100,xlim=c(0,100))
+
+EX <- sum(x_pareto*weight)/m 
+EX2 <- sum(x_pareto^2*weight)/m 
+
+# part c: f is the pareto distribution
+
+m <- 10000 # number of samples for each estimator
+set.seed(0)
+k <- 1; 
+x_exp <- rexp(m, rate=1/k)+2
+g_exp <- dexp(x_exp-2, rate=1/k,log=FALSE) # density of x under g
+exp<-cbind(x_exp,g_exp)
+exp<-exp[ order(exp[,1]), ] 
+plot(exp[,1],exp[,2],type='l',col='red',xlim=c(0,8),ylim=c(0,1))
+
+alpha <- 2; beta <- 3; 
+m <- 10000 # number of observations
+set.seed(0)
+x_pareto <- rpareto(m, location = alpha, shape = beta)
+f_pareto <- dpareto(x_pareto, location = alpha, shape = beta)  # density of x under f
+pareto<-cbind(x_pareto,f_pareto)
+pareto<-pareto[ order(pareto[,1]), ] 
+lines(pareto[,1],pareto[,2],type='l',ylim=c(0,1))
+legend(3,0.8,c("Pareto","Exponential"),lty=1,col=c("black","red"),bty="n")
+
+weight<-f_pareto/g_exp
+weight<-sort(weight)
+
+#plot weights
+index<-which(weight<=100)
+weight2<-weight[index]
+hist(weight2,breaks=100,xlim=c(0,20))
+hist(weight2*x_pareto[index],breaks=100,xlim=c(0,100))
+
+EX <- sum(x_pareto*weight)/m 
+EX2 <- sum(x_pareto^2*weight)/m 
+
+
+
+#------Problem 3-------------
+options(digits = 10)
+
+#part b
+
+#part c
+n=100
+beta0=matrix(c(1,1,1,1),4,1)
+X=matrix(rnorm(n*4),4,n)
+Y<-t(X) %*% beta0
+Y<-ifelse(Y<=0,0,1)
+
+betat<-matrix(c(0.5,0.5,0,0),4,1)
+diff=3
+
+while (diff>0.05){
+  t <- t(X) %*% betat
+  phi <- pnorm(t)
+  pdf <- 1/sqrt(2*pi)*exp(-1/2*(t)^2)
+  mlltest<-(Y-phi)/(phi*(1-phi))*pdf
+  model<-lm(mlltest~0+t(X))
+  beta_new<-model[[1]]
+  diff<-sum(abs(betat-beta_new))
+  betat<-beta_new
+}
+
+betat
+
+# Part d using optim
+n=100
+beta0=matrix(c(1,1,1,1),4,1)
+X=matrix(rnorm(n*4),4,n)
+Y<-t(X) %*% beta0
+Y<-ifelse(Y<=0,0,1)
+
+betat<-matrix(c(0.5,0.5,0,0),4,1)
+
+probit.LogLik <- function(beta,X,Y){
+  phi <- pnorm(t(X) %*% beta)
+  loglik <- log(Y * (phi) + (1-Y) * (1-phi))
+  out <- return(-sum(loglik))
+}
+
+out <- optim(betat, probit.LogLik , Y=Y, X = X, method="BFGS", hessian = T)
+out
+
+
+vcov<-solve(abs(-out$hessian))
+se<-sqrt(diag(vcov))
+se 
+
+z.score<-out$par/se
+z.score
+#----------Problem 4--------------------
+
+#part a
+library(maptools)
+library(lattice)
+library(fields)
+library(cluster)
+load("ps5prob5.RData")
+
+# Part a
+plot(log(data$wavelength),data$flux)
+plot(data$time,data$flux)
+levelplot(flux~time*log(wavelength),data=data,contour=TRUE)
+
+#part b
+
+names(meanpts) <- c("time", "value")
+# this creates the function, meanfunc()
+meanfunc <- with(list(spf = splinefun(meanpts$time, meanpts$value, method = "natural"), 
+                      minday = min(meanpts$time), 
+                      maxday = max(meanpts$time)),
+                 function(theta, times){
+                   j=1:nrow(times)
+                   rescaled[j,1] <- times[j,1]/theta$lambda
+                   if(any(rescaled < minday | rescaled > maxday))
+                     warning("Extrapolating beyond the range of the template data")
+                   mean[j,1] <- theta$kappa * spf(rescaled[j,1])
+                   return(mean)
+                 })
+
+
+theta <- data.frame(0,0)
+theta[1,]<- c(1,0.3)
+names(theta) <- c("lambda","kappa")
+times <- data.frame(unique(data$time))
+rescaled <- matrix(NA,nrow=nrow(times))
+mean <- matrix(NA,nrow=nrow(times))
+
+mu0 <- meanfunc(theta,times)
+
+plot(times$unique.data.time.,mu0,lty=1)
+
+theta 
+
+#covariance function
+time<-unique(data$time)
+wavelengths<-unique(data$wavelength)
+       
+time_y_matrix<-matrix(time,length(time),length(wavelengths))
+wave_x_matrix<-t(matrix(wavelengths,length(wavelengths),length(time)))
+
+sigma <- 0.11
+row <- 0.082
+rot <- 1.5
+tau <- 0.03
+alpha <- 0.01
+cov_matrix <- matrix(NA,length(time),length(wavelengths))
+nu <- matrix(data$fluxerror^2,12,34)
+
+cov<-function(mu0,sigma,row,rot,tau,alpha,nu,wave_x_matrix,time_y_matrix){
+  for (j in 1:length(time)){
+    for (i in 1:length(wavelengths)){
+      w_diff <- log(wave_x_matrix)-log(wave_x_matrix[,j])
+      t_diff <- time_y_matrix-time_y_matrix[j,]
+      if(t_diff[j,i]==0){I=1}else{I=0}
+      if(w_diff[j,i]==0 & t_diff[j,i]==0){I2=1}else{I2=0}
+      cov_temp <- sigma*exp(-abs(w_diff[j,i])/row)*exp(-abs(t_diff[j,i])/rot)+tau*I+alpha*nu[j,i]*I2
+      cov_matrix[j,i] <- cov_temp
+    }  
+  }
+
+  return(cov_matrix)
+}
+
+cov_matrix<-cov(mu0,sigma,row,rot,tau,alpha,nu,wave_x_matrix,time_y_matrix)
+
+#part D create the log-liklihood function and optimize
+theta0<-c(sigma,row,rot,tau,alpha)
+Y <- matrix(data$flux,12,34)
+
+loglik <- function(theta0,Y,mu0,nu,wave_x_matrix,time_y_matrix){
+  cov_matrix<-cov(mu0,theta0[1],theta0[2],theta0[3],theta0[4],theta0[5],nu,wave_x_matrix,time_y_matrix)
+  term1 <-log(det(t(cov_matrix)%*%cov_matrix)^-1/2)
+  v <- Y[1,]-mu0[1]
+  c <-solve(t(cov_matrix)%*%cov_matrix,v)
+  term2 <- 1/2*t(v)*c
+  logl <- term1-log(sqrt(2*pi))-term2
+  out <- return(sum(logl))
+}         
+         
+out <- optim(par = theta0, loglik, Y=Y, mu0=mu0,nu=nu,wave_x_matrix=wave_x_matrix,time_y_matrix=time_y_matrix, method="BFGS", hessian = T)    
+
+
+         
